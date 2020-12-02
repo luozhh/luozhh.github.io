@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+    <meta name="description" content="码农 博客 技术 生活 积累 沉淀 ">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    事务的ACID |
+    
+    行者无疆</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="行者无疆" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-事务的ACID" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      事务的ACID
+    </h1>
+  
+  
+
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/12/02/%E4%BA%8B%E5%8A%A1%E7%9A%84ACID/" class="article-date">
+  <time datetime="2020-12-02T06:42:38.000Z" itemprop="datePublished">2020-12-02</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+  </div>
+
+    </div>
+    
+
+    
+    
+<div class="tocbot"></div>
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <h1 id="1-什么是事务"><a href="#1-什么是事务" class="headerlink" title="1. 什么是事务"></a>1. 什么是事务</h1><p>事务（Transaction）是由一系列对系统中数据进行访问与更新的操作所组成的一个程序执行逻辑单元（Unit），狭义上的事务特指数据库事务。一方面，当多个应用程序并发访问数据库时，事务可以在这些应用程序之间提供一个隔离方法，以防止彼此的操作互相干扰。另一方面，事务为数据库操作序列提供了一个从失败中恢复到正常状态的方法，同时提供了数据库即使在异常状态下仍然保持数据一致性的方法。</p>
+<a id="more"></a>
+<h2 id="2-事务的四大特性ACID"><a href="#2-事务的四大特性ACID" class="headerlink" title="2. 事务的四大特性ACID"></a>2. 事务的四大特性ACID</h2><ul>
+<li>原子性（Atomicity）</li>
+<li>一致性（Consistency）</li>
+<li>隔离性（Isolation）</li>
+<li>持久性（Durability）</li>
+</ul>
+<h3 id="2-1-原子性"><a href="#2-1-原子性" class="headerlink" title="2.1 原子性"></a>2.1 原子性</h3><p>事务的原子性是指事务必须是一个原子的操作序列单元。整个事务中的所有操作要么全部执行成功，要么全部执行失败后回滚到最初状态。</p>
+<h3 id="2-2-一致性"><a href="#2-2-一致性" class="headerlink" title="2.2 一致性"></a>2.2 一致性</h3><p>事务的一致性是指事务的执行不能破坏数据库数据的完整性和一致性，一个事务在执行之前和执行之后，数据库都必须处于一致性状态。也就是说，事务执行的结果必须是数据库从一个一致性状态转变到另一个一致性状态，因此当数据库只包含成功事物提交的结果时，就能说数据库处于一致性状态。而如果数据库系统在运行过程中发生故障，有些事务尚未完成被迫中断，这些未完成的事务对数据库所做的修改有一部分已写入物理数据库，这时数据库就是处于一种不正确的状态，或者说是不一致的状态。</p>
+<h3 id="2-3-隔离性"><a href="#2-3-隔离性" class="headerlink" title="2.3 隔离性"></a>2.3 隔离性</h3><p>事务的隔离级别是通过锁的机制来实现的。</p>
+<p>事务的隔离性是指在并发环境中，并发的事务是相互隔离的，一个事务的执行不能被其他事务干扰。也就是说，不同的事务并发操纵相同的数据时，每个事务都有各自完整的数据空间，即一个事务内部的操作及使用的数据对其他并发事务时隔离的，并发执行的各个事务之间不能相互干扰。</p>
+<p>在标准SQL规范中，定义了4个事务隔离级别</p>
+<ul>
+<li>未提交读</li>
+<li>已提交读</li>
+<li>可重复读：简单地说，就是保证在事务处理过程中，多次读取同一个数据时，其值都和事务开始时刻是一致的。因此，该事务级别禁止了不可重复读取和脏读取，但是有可能出现幻影数据。</li>
+<li>串行化/序列化</li>
+</ul>
+<h4 id="2-3-1-为什么要设置隔离级别"><a href="#2-3-1-为什么要设置隔离级别" class="headerlink" title="2.3.1 为什么要设置隔离级别"></a>2.3.1 为什么要设置隔离级别</h4><p>在数据库的操作中，在并发的情况下可能出现如下问题</p>
+<ul>
+<li><p>脏读（Ditry Read）</p>
+<blockquote>
+<p>当前事务能够看到别的事务中未提交的数据。A事务读取B事务尚未提交的数据并在此基础上操作，而B事务执行回滚，那么A读取到的数据就是脏数据。<br><br>解决办法：如果在第一个事务提交前，任务其他事务不可读取其修改过的值，则可避免该问题。</p>
+</blockquote>
+</li>
+<li><p>不可重复读</p>
+<blockquote>
+<p>一个事务对同一行数据重复读取两次，但是却得到了不同的结果。事务T1读取某一行数据后，事务T2对其做了修改，当事务T1再次读该行数据时得到与前一次不同的值。<br><br>解决办法：如果只有在修改事物完全提交之后才可以读取数据，则可避免该问题。</p>
+</blockquote>
+</li>
+<li><p>幻读</p>
+<blockquote>
+<p>所谓幻读，就是指同样的事务操作，在前后两个时间段内执行对同一个数据项的读取，可能出现不一致的结果。（同样人执行同样的读取同一行操作，但不同事务）</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="2-3-2-隔离级别对比"><a href="#2-3-2-隔离级别对比" class="headerlink" title="2.3.2 隔离级别对比"></a>2.3.2 隔离级别对比</h4><table>
+<thead>
+<tr>
+<th>隔离级别</th>
+<th>脏读</th>
+<th>可重复读</th>
+<th>幻读</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>读未提交</td>
+<td>存在</td>
+<td>不可以</td>
+<td>存在</td>
+</tr>
+<tr>
+<td>读已提交</td>
+<td>不存在</td>
+<td>不可以</td>
+<td>存在</td>
+</tr>
+<tr>
+<td>可重复读</td>
+<td>不存在</td>
+<td>可以</td>
+<td>存在</td>
+</tr>
+<tr>
+<td>串行化</td>
+<td>不存在</td>
+<td>可以</td>
+<td>不存在</td>
+</tr>
+</tbody></table>
+<h3 id="2-4-持久性"><a href="#2-4-持久性" class="headerlink" title="2.4 持久性"></a>2.4 持久性</h3><p>事务的持久性也被称为永久性，是指一个事务一旦提交，它对数据库中对应数据的状态变更就应该是永久性的。换句话说，一旦某个事务成功结束，那么它对数据库所做的更新就必须被永久保存下来，即使发生系统崩溃或机器宕机等故障，只要数据库能够重新启动，那么一定能够将其恢复到事务成功结束时的状态。</p>
+<h2 id="3-结束"><a href="#3-结束" class="headerlink" title="3. 结束"></a>3. 结束</h2><p>尝试写博文，文章结构和编排，美观方面后面一步步改进了。</p>
+<p>资料参考：<br> -《从PAXOS到ZOOKEEPER分布式一致性原理与实践》，作者：倪超<br> -《MySQL性能优化和高可用架构实战》,作者：宋立恒</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://luozhh1216.github.io/2020/12/02/%E4%BA%8B%E5%8A%A1%E7%9A%84ACID/" data-id="cki72hery0003ix71bi04buca" class="article-share-link">
+        分享
+      </a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BA%8B%E5%8A%A1/" rel="tag">事务</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+    
+      <a href="/2020/11/25/hello-world/" class="article-nav-link">
+        <strong class="article-nav-caption">后一篇</strong>
+        <div class="article-nav-title">Hello World</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+  
+  
+
+</article>
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2020 行者无疆</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a target="_blank" rel="noopener" href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="行者无疆"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">主页</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">归档</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/categories">分类</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/tags">标签</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">关于</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="搜索">
+        <i class="fe fe-search"></i>
+        搜索
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

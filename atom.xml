@@ -6,7 +6,7 @@
   <link href="https://luozhh1216.github.io/atom.xml" rel="self"/>
   
   <link href="https://luozhh1216.github.io/"/>
-  <updated>2020-11-26T17:05:54.685Z</updated>
+  <updated>2020-12-02T07:06:01.844Z</updated>
   <id>https://luozhh1216.github.io/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>事务的ACID</title>
+    <link href="https://luozhh1216.github.io/2020/12/02/%E4%BA%8B%E5%8A%A1%E7%9A%84ACID/"/>
+    <id>https://luozhh1216.github.io/2020/12/02/%E4%BA%8B%E5%8A%A1%E7%9A%84ACID/</id>
+    <published>2020-12-02T06:42:38.000Z</published>
+    <updated>2020-12-02T07:06:01.844Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;1-什么是事务&quot;&gt;&lt;a href=&quot;#1-什么是事务&quot; class=&quot;headerlink&quot; title=&quot;1. 什么是事务&quot;&gt;&lt;/a&gt;1. 什么是事务&lt;/h1&gt;&lt;p&gt;事务（Transaction）是由一系列对系统中数据进行访问与更新的操作所组成的一个程序执行逻辑单元（Unit），狭义上的事务特指数据库事务。一方面，当多个应用程序并发访问数据库时，事务可以在这些应用程序之间提供一个隔离方法，以防止彼此的操作互相干扰。另一方面，事务为数据库操作序列提供了一个从失败中恢复到正常状态的方法，同时提供了数据库即使在异常状态下仍然保持数据一致性的方法。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="数据库" scheme="https://luozhh1216.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    
+    <category term="事务" scheme="https://luozhh1216.github.io/tags/%E4%BA%8B%E5%8A%A1/"/>
+    
+    <category term="MySQL" scheme="https://luozhh1216.github.io/tags/MySQL/"/>
+    
+  </entry>
   
   <entry>
     <title>Hello World</title>
