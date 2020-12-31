@@ -6,7 +6,7 @@
   <link href="https://luozhh1216.github.io/atom.xml" rel="self"/>
   
   <link href="https://luozhh1216.github.io/"/>
-  <updated>2020-12-02T07:06:01.844Z</updated>
+  <updated>2020-12-31T06:04:12.451Z</updated>
   <id>https://luozhh1216.github.io/</id>
   
   <author>
@@ -15,6 +15,25 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2020年的感悟</title>
+    <link href="https://luozhh1216.github.io/2020/12/31/2020%E5%B9%B4%E7%9A%84%E6%84%9F%E6%82%9F/"/>
+    <id>https://luozhh1216.github.io/2020/12/31/2020%E5%B9%B4%E7%9A%84%E6%84%9F%E6%82%9F/</id>
+    <published>2020-12-31T05:55:27.000Z</published>
+    <updated>2020-12-31T06:04:12.451Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;1-想说的话&quot;&gt;&lt;a href=&quot;#1-想说的话&quot; class=&quot;headerlink&quot; title=&quot;1. 想说的话&quot;&gt;&lt;/a&gt;1. 想说的话&lt;/h1&gt;&lt;p&gt;今天是2020年最后一天，天气晴朗，但寒潮来袭，一种清冷的体感。2020年是不平凡的一年，我有许多话想说。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="随笔" scheme="https://luozhh1216.github.io/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+    <category term="生活感悟" scheme="https://luozhh1216.github.io/tags/%E7%94%9F%E6%B4%BB%E6%84%9F%E6%82%9F/"/>
+    
+  </entry>
   
   <entry>
     <title>事务的ACID</title>
